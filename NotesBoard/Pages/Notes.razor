@@ -1,0 +1,69 @@
+﻿
+@page "/"
+@using NotesBoard.Models
+@using NotesBoard.Services
+@inject NoteService NoteService
+
+<h3>Note Board</h3>
+
+<input @bind="newTitle" placeholder="Title" />
+<input @bind="newContent" placeholder="Content" />
+
+<button @onclick="AddNote">Add Note</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Note note in notes)
+        {
+            <tr>
+                <td>@note.Title</td>
+                <td>@note.Content</td>
+                <td>
+                    <button @onclick="() => DeleteNote(note.Id)">
+                        Delete
+                    </button>
+                 </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<Note> notes = new();
+
+    string? newTitle;
+    string? newContent;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await NoteService.GetAllAsync();
+    }
+
+    async Task AddNote()
+    {
+        Note note = new Note()
+            {
+                Title = newTitle,
+                Content = newContent
+            };
+
+        await NoteService.CreateAsync(note);
+
+        notes = await NoteService.GetAllAsync();
+    }
+
+    async Task DeleteNote(string id)
+    {
+        await NoteService.DeleteAsync(id);
+
+        notes = await NoteService.GetAllAsync();
+    }
+}
