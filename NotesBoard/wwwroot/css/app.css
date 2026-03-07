@@ -1,0 +1,45 @@
+﻿.notes-board {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction:row;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.note-card {
+    width: 250px;
+    margin: 15px 0;
+    padding: 15px;
+    background: #9e9e9e4a;
+    border-radius: 10px;
+    box-shadow: 9px 8px 10px 3px rgba(0, 0, 0, 0.15);
+}
+
+.note-card h4 {
+    margin-top: auto;
+}
+
+.card-actions {
+    margin-top: 10px;
+}
+
+.add-note {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-delete{
+    background:white;
+
+}
+
+.btn-delete:hover{
+    background:black;
+    color:white;
+}
+
+.one-row{
+    display:flex;
+    gap:10px;
+    justify-content:center
+}
