@@ -1,38 +1,38 @@
-﻿using MongoDB.Driver;
-using NotesBoard.Data;
+﻿using NotesBoard.Data.Repository.Contract;
 using NotesBoard.Models;
+using NotesBoard.Services.Contract;
 
 namespace NotesBoard.Services
 {
-    public class NoteService
+    public class NoteService : INoteService
     {
 
-        private readonly IMongoCollection<Note> notes;
+        private readonly INoteBoardRepository notesBoardRepo;
 
-        public NoteService(BoardDbContext boardContex)
+        public NoteService(INoteBoardRepository notesBoardRepo)
         {
-            notes = boardContex.Notes;
+            this.notesBoardRepo = notesBoardRepo;
         }
 
         public async Task<List<Note>> GetAllAsync()
         {
-            return await notes.Find(note => true).ToListAsync();
+            return await notesBoardRepo.GetAllNotesAsync();
         }
 
         public async Task CreateAsync(Note note)
         {
-            await notes.InsertOneAsync(note);
+            await notesBoardRepo.CreateNoteAsync(note);
 
         }
 
         public async Task DeleteAsync(string id)
         {
-            await notes.DeleteOneAsync(n => n.Id == id);
+            await notesBoardRepo.DeleteNoteAsync(id);
         }
 
         public async Task UpdateAsync(Note note)
         {
-            await notes.ReplaceOneAsync(x => x.Id == note.Id, note);
+            await notesBoardRepo.UpdateNoteAsync(note);
         }
     
     }

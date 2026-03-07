@@ -1,20 +1,21 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+
 using NotesBoard.Data;
+using NotesBoard.Data.Repository;
+using NotesBoard.Data.Repository.Contract;
 using NotesBoard.Services;
+using NotesBoard.Services.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<BoardDbContext>();
-builder.Services.AddScoped<NoteService>();
+builder.Services.AddScoped<INoteBoardRepository, NoteBoardRepository>();
+builder.Services.AddScoped<INoteService, NoteService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -31,4 +32,4 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-app.Run();
+await app.RunAsync();
