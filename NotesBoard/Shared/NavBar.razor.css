@@ -1,0 +1,24 @@
+﻿.top-navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 30px;
+    background: #7c7e66;
+    color: white;
+}
+
+    .top-navbar a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+    }
+
+.content {
+    padding: 30px;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}

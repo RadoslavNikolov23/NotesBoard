@@ -1,37 +1,35 @@
-﻿
-@page "/"
+﻿@page "/notes"
 @using NotesBoard.Models
 @using NotesBoard.Services
 @using NotesBoard.Services.Contract
 @inject INoteService NoteService
 
-<h3>Note Board</h3>
 
-<div class="add-note">
-    <input @bind="newTitle" placeholder="Title" />
-    <input @bind="newContent" placeholder="Content" />
+<div class="notes-page">
+    <div class="add-note">
+        <h3>Note Board</h3>
 
-    <button @onclick="AddNote">Add Note</button>
-</div>
+        <input @bind="newTitle" placeholder="Title" />
+        <input @bind="newContent" placeholder="Content" />
 
+        <button @onclick="AddNote">Add Note</button>
+    </div>
 
-
-<div class="notes-board">
+    <div class="notes-board">
         @foreach (Note note in notes)
         {
             <div class="note-card">
                 <div class="one-row">
                     <h4>@note.Title</h4>
-                    <div class="card-actions">
-                        <button class="btn-delete" @onclick="() => DeleteNote(note.Id)">
-                            Delete
-                        </button>
-                    </div>
+                    <button class="btn-delete" @onclick="() => DeleteNote(note.Id)">
+                        Delete
+                    </button>
                 </div>
                 <p>@note.Content</p>
                 <small>@note.CreatedAt.ToLocalTime()</small>
             </div>
         }
+    </div>
 </div>
 
 @code {
@@ -48,16 +46,16 @@
     async Task AddNote()
     {
         Note note = new Note()
-            {
-                Title = newTitle,
-                Content = newContent
-            };
+        {
+            Title = newTitle,
+            Content = newContent
+        };
 
         await NoteService.CreateAsync(note);
 
         notes = await NoteService.GetAllAsync();
 
-        newTitle="";
+        newTitle = "";
         newContent = "";
     }
 
