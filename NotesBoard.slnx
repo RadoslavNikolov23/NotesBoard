@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="NotesBoard.Tests/NotesBoard.Tests.csproj" Id="885c6080-069c-4de1-9353-8515d64724db" />
   <Project Path="NotesBoard/NotesBoard.csproj" />
 </Solution>
