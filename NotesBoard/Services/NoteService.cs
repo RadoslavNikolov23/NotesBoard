@@ -20,12 +20,14 @@ namespace NotesBoard.Services
         {
             try
             {
-                this.logger.LogInformation("Getting all notes from the repository.");
-                return await notesBoardRepo.GetAllNotesAsync();
+                this.logger.LogInformation("Getting all notes from the repository");
+                var notes = await notesBoardRepo.GetAllNotesAsync();
+                this.logger.LogInformation("Successfully retrieved {NoteCount} notes", notes.Count);
+                return notes;
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, "An error occurred while getting all notes.");
+                this.logger.LogError(ex, "Failed to retrieve notes from repository");
                 throw;
             }
         }
@@ -34,27 +36,28 @@ namespace NotesBoard.Services
         {
             try
             {
-                this.logger.LogInformation($"Creating a new note with title: {note.Title}", note.Title);
+                this.logger.LogInformation("Creating a new note with title: {NoteTitle}", note.Title);
                 await notesBoardRepo.CreateNoteAsync(note);
+                this.logger.LogInformation("Successfully created note with title: {NoteTitle}", note.Title);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"An error occurred while creating a new note with title: {note.Title}");
+                this.logger.LogError(ex, "Failed to create note with title: {NoteTitle}", note.Title);
                 throw;
             }
-
         }
 
         public async Task DeleteAsync(string id)
         {
             try
             {
-                this.logger.LogInformation($"Deleting note with id: {id}");
+                this.logger.LogInformation("Deleting note with id: {NoteId}", id);
                 await notesBoardRepo.DeleteNoteAsync(id);
+                this.logger.LogInformation("Successfully deleted note with id: {NoteId}", id);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"An error occurred while deleting note with id: {id}");
+                this.logger.LogError(ex, "Failed to delete note with id: {NoteId}", id);
                 throw;
             }
         }
@@ -63,12 +66,13 @@ namespace NotesBoard.Services
         {
             try
             {
-                this.logger.LogInformation($"Updating note with id: {note.Id}");
+                this.logger.LogInformation("Updating note with id: {NoteId}", note.Id);
                 await notesBoardRepo.UpdateNoteAsync(note);
+                this.logger.LogInformation("Successfully updated note with id: {NoteId}", note.Id);
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"An error occurred while updating note with id: {note.Id}");
+                this.logger.LogError(ex, "Failed to update note with id: {NoteId}", note.Id);
                 throw;
             }
         }
